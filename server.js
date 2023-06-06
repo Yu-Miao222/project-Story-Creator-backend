@@ -52,9 +52,15 @@ const User = mongoose.model("User", UserSchema);
 
 //Authenticate the user
 const authenticateUser = async (req, res, next) => {
+  console.log('authorizing')
   const accessToken = req.header("Authorization");
+  console.log(accessToken)
+  // console.log(req)
+  // console.log(res)
+  // console.log(next)
   try {
     const user = await User.findOne({accessToken: accessToken});
+    console.log(user)
     if (user) {
       next();
     } else {
@@ -73,17 +79,17 @@ const authenticateUser = async (req, res, next) => {
 
 // creat Story schema
 const StoryDetail = new mongoose.Schema({
-  title: {
+  name: {
     type: String,
     required: true,
   },
-  story_content: {
+  storyContent: {
     type: String,
     required: true,
     minlength: 5,
     trim: true
   },
-  story_img: {
+  storyImg: {
     type: String,
     required: false
   },
@@ -130,15 +136,11 @@ app.post("/register", async(req, res) => {
   const { username, password} = req.body
   try {
     const salt = bcrypt.genSaltSync();
-    console.log(salt)
     console.log(bcrypt.hashSync(password, salt))
     const newUser = await new User({
       username: username,
       password: bcrypt.hashSync(password, salt)
     })
-    console.log(newUser)
-    newUser.save()
-    console.log("newUser saved")
     res.status(201).json(
       {
       sucess: true,
@@ -148,10 +150,8 @@ app.post("/register", async(req, res) => {
         accessToken: newUser.accessToken
       }
     })
-    // console.log(res)
      
   } catch (e){
-    console.log('registration error')
     res.status(400).json({
       success: false,
       response: e
@@ -161,14 +161,9 @@ app.post("/register", async(req, res) => {
 
 //user login
 app.post("/login", async(req, res) => {
-  console.log('API login')
   const { username, password } = req.body;
-  
   try {
-    console.log('trying to login')
-    console.log(username)
     const user = await User.findOne({username})
-    console.log(user)
 
     if (user && bcrypt.compareSync(password, user.password)) {
       res.status(200).json({
@@ -198,6 +193,7 @@ app.post("/login", async(req, res) => {
 // Shows story when logged in 
 app.get("/stories", authenticateUser)
 app.get("/stories", async(req, res) => {
+  console.log("test")
   const { tags } = req.query
   if(tags) {
     const filteredStories = await Story.find({'story.tags':tags})
@@ -207,7 +203,7 @@ app.get("/stories", async(req, res) => {
     })
   } else {
     try {
-      const stories = await Story.find ().sort({createdAt:'desc'})
+      const stories = await Story.find().sort({createdAt:'desc'})
       res.status(200).json({
         success: true,
         response: stories
@@ -314,20 +310,25 @@ app.post("/stories", async (req, res) => {
   const { story } = req.body
   const accessToken = req.header("Authorization")
   const user = await User.findOne({accessToken: accessToken})
-
+  console.log("post stories")
   try {
+    console.log(user)
+    console.log(story)
     const newStory = await new Story({story, userId: user._id, username: user.username}).save()
+    console.log(newStory)
     res.status(201).json({
       success: true,
       response: newStory
     })
   } catch (e) {
+    console.log(e)
     res.status(400).json({
       success: false,
       response: e
     })
   }
 })
+
 // Delete story
 app.delete("/stories/:storyId", async (req, res) => {
   const { storyId } = req.params
