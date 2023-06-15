@@ -78,7 +78,7 @@ const authenticateUser = async (req, res, next) => {
 }
 
 // creat Story schema
-const StoryDetail = new mongoose.Schema({
+const StoryDetails = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -101,7 +101,7 @@ const StoryDetail = new mongoose.Schema({
 
 const StorySchema = new mongoose.Schema({
   story: {
-    type: StoryDetail
+    type: StoryDetails
   },
   createdAt: {
     type: Date,
