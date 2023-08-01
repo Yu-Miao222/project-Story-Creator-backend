@@ -4,6 +4,8 @@ This is a full stack app bulit by:
 BE: node.js, RestfulAPI, Express, Mongoose, MongoDB, Google Cloud Platform.
 FE: React, React Router, React Redux, Redux Toolkit, Netlify.
 
+Front-end github: https://github.com/Yu-Miao222/project-Final-frontend
+
 
 ## 
 npm install;
