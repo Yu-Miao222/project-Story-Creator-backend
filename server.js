@@ -7,7 +7,8 @@ import listEndpoints from "express-list-endpoints";
 
 
 
-const mongoUrl = process.env.MONGO_URL || "mongodb://127.0.0.1/storyCreator";
+// const mongoUrl = process.env.MONGO_URL || "mongodb://127.0.0.1/storyCreator";
+const mongoUrl = process.env.MONGO_URL || "https://project-final-backend-vomtuwgk6q-lz.a.run.app";
 mongoose.connect (mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.Promise = Promise;
 
@@ -55,9 +56,6 @@ const authenticateUser = async (req, res, next) => {
   console.log('authorizing')
   const accessToken = req.header("Authorization");
   console.log(accessToken)
-  // console.log(req)
-  // console.log(res)
-  // console.log(next)
   try {
     const user = await User.findOne({accessToken: accessToken});
     console.log(user)

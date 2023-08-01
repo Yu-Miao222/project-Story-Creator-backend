@@ -1,11 +1,16 @@
-# Express API Starter Project
+## About Project
 
-This project includes the packages and babel setup for an express server, and is just meant to make things a little simpler to get up and running with.
+This is a full stack app bulit by:
+BE: node.js, RestfulAPI, Express, Mongoose, MongoDB, Google Cloud Platform.
+FE: React, React Router, React Redux, Redux Toolkit, Netlify.
 
-## Getting started
 
-Install dependencies with `npm install`, then start the server by running `npm run dev`
+## 
+npm install;
+npm react-router-dom install;
+npm install react-redux;
+npm install styled-components
 
-## View it live
-
-Every project should be deployed somewhere. Be sure to include the link to the deployed project so that the viewer can click around and see what it's all about.
+# Live 
+Back-end: https://project-final-backend-vomtuwgk6q-lz.a.run.app/
+Front-end: https://yourstorycreator.netlify.app/
